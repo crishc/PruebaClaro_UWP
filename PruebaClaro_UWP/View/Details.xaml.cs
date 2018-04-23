@@ -11,17 +11,17 @@ namespace PruebaClaro_UWP.View
             this.InitializeComponent();
         }
 
-        //protected override void OnNavigatedTo(NavigationEventArgs e)
-        //{
-        //    base.OnNavigatedTo(e);
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
 
-        //    ConnectedAnimation imageAnimation =
-        //        ConnectedAnimationService.GetForCurrentView().GetAnimation("imagenPelicula");
-        //    if (imageAnimation != null)
-        //    {
-        //        imageAnimation.TryStart(Imagen);
-        //    }
-        //}
+            ConnectedAnimation imageAnimation =
+                ConnectedAnimationService.GetForCurrentView().GetAnimation("imagenPelicula");
+            if (imageAnimation != null)
+            {
+                imageAnimation.TryStart(Imagen);
+            }
+        }
 
     }
 }

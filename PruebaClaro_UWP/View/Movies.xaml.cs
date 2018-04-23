@@ -10,10 +10,13 @@ namespace PruebaClaro_UWP.View
             this.InitializeComponent();
         }
 
-        //protected override void OnNavigatedFrom(NavigationEventArgs e)
-        //{
-        //    listView.PrepareConnectedAnimation("imagenPelicula", listView.SelectedItem, "ImagenPeliculaAnim");
-        //}
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            if(e.SourcePageType == typeof(Details) && listView.SelectedItem != null)
+            {
+                listView.PrepareConnectedAnimation("imagenPelicula", listView.SelectedItem, "ImagenPeliculaAnim");
+            }
+        }
 
     }
 }

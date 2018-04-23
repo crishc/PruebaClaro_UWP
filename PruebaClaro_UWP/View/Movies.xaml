@@ -124,6 +124,13 @@
             </Grid>
             <!--<Rectangle Fill="{ThemeResource CustomAcrylicBrush}" />-->
         </ScrollViewer>
+        <TextBlock Visibility="{Binding InternetFalla}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                    Style="{StaticResource TitleTextBlockStyle}"
+                    Margin="0,4,0,0"
+                    FontWeight="Normal"
+                    Text="Comprueba tu conexión a Internet" />
     </Grid>
 
 </Page>

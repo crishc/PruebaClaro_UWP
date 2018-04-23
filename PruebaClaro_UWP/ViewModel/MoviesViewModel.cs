@@ -7,6 +7,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -101,9 +103,6 @@ namespace PruebaClaro_UWP.ViewModel
             {
                 Query = "";
                 PeliculaSeleccionada = (PeliculaGeneral)data.ChosenSuggestion;
-                //bus.PeliculaActualSet((PeliculaDetalleType)data.ChosenSuggestion);
-                //Navigate.Navigate(typeof(DetallePage));
-                //ListaResultado = null;
             }
             //ListaResultado = await bussinesLayer.BuscarPelicula(TextoBuscador);
         }
@@ -116,12 +115,41 @@ namespace PruebaClaro_UWP.ViewModel
         private async Task CargarPantalla()
         {
             CargarImagenRespectoATema();
-            Peliculas = await business.ObtenerPeliculasAsync();
+            Peliculas = new ObservableCollection<PeliculaGeneral>();
+            if (Peliculas.Count == 0)
+            {
+                Peliculas = await business.ObtenerPeliculasAsync();
+            }
             if (Peliculas.Count() == 0)
             {
                 InternetFalla = true;
+                business.EventoCambioEstadoInternet += Business_EventoCambioEstadoInternet;
             }
         }
+
+        private async void Business_EventoCambioEstadoInternet(object sender, bool e)
+        {
+            if (e)
+            {
+                await SolicitarPeliculasAsync();
+            }
+        }
+
+        private async Task SolicitarPeliculasAsync()
+        {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                async () =>
+                {
+                    Peliculas = await business.ObtenerPeliculasAsync();
+                    if (Peliculas.Count() > 0)
+                    {
+                        InternetFalla = false;
+                        business.EventoCambioEstadoInternet += Business_EventoCambioEstadoInternet;
+                    }
+                });
+
+        }
+
         private void CargarImagenRespectoATema()
         {
             if (business.TemaActual == "Light")

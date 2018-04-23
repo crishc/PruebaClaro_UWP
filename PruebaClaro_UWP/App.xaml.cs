@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,6 +24,8 @@ namespace PruebaClaro_UWP
     /// </summary>
     sealed partial class App : Application
     {
+
+        private const string SelectedAppThemeKey = "SelectedAppTheme";
         /// <summary>
         /// Inicializa el objeto de aplicación Singleton. Esta es la primera línea de código creado
         /// ejecutado y, como tal, es el equivalente lógico de main() o WinMain().
@@ -95,6 +99,36 @@ namespace PruebaClaro_UWP
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Guardar el estado de la aplicación y detener toda actividad en segundo plano
             deferral.Complete();
+        }
+
+        public static ElementTheme RootTheme
+        {
+            get
+            {
+                if (Window.Current.Content is FrameworkElement rootElement)
+                {
+                    return rootElement.RequestedTheme;
+                }
+
+                return ElementTheme.Default;
+            }
+            set
+            {
+                if (Window.Current.Content is FrameworkElement rootElement)
+                {
+                    rootElement.RequestedTheme = value;
+                }
+
+                ApplicationData.Current.LocalSettings.Values[SelectedAppThemeKey] = value.ToString();
+            }
+        }
+        public static TEnum GetEnum<TEnum>(string text) where TEnum : struct
+        {
+            if (!typeof(TEnum).GetTypeInfo().IsEnum)
+            {
+                throw new InvalidOperationException("Generic parameter 'TEnum' must be an enum.");
+            }
+            return (TEnum)Enum.Parse(typeof(TEnum), text);
         }
     }
 }

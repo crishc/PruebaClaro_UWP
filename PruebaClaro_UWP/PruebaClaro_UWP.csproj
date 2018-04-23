@@ -96,6 +96,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\RootFrameNavigationHelper.cs" />
+    <Compile Include="Model\Data\SQLite\Entities\Pelicula.cs" />
+    <Compile Include="Model\Data\SQLite\Types\PeliculaType.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -127,15 +130,19 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="PruebaClaro_UWP_TemporaryKey.pfx" />
+    <PRIResource Include="Resources\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Iconos\Icono.png" />
+    <Content Include="Assets\Iconos\internet.png" />
     <Content Include="Assets\Iconos\LargeTile.scale-100.png" />
     <Content Include="Assets\Iconos\LargeTile.scale-125.png" />
     <Content Include="Assets\Iconos\LargeTile.scale-150.png" />
     <Content Include="Assets\Iconos\LargeTile.scale-200.png" />
     <Content Include="Assets\Iconos\LargeTile.scale-400.png" />
     <Content Include="Assets\Iconos\Logo.png" />
+    <Content Include="Assets\Iconos\LogoNegro.png" />
+    <Content Include="Assets\Iconos\noInternet.png" />
     <Content Include="Assets\Iconos\SmallTile.scale-100.png" />
     <Content Include="Assets\Iconos\SmallTile.scale-125.png" />
     <Content Include="Assets\Iconos\SmallTile.scale-150.png" />
@@ -183,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Resources\Global.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -213,10 +224,11 @@
     <PackageReference Include="MvvmLightLibs">
       <Version>5.4.1</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>11.0.2</Version>
+    </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\Data\SQLite\Entities\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

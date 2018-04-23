@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using PruebaClaro_UWP.Model.Data.SQLite.Entities;
 
 namespace PruebaClaro_UWP.Model.Data.SQLite
 {
-    class DataContext
+    public class DataContext : DbContext
     {
+        public DbSet<Pelicula> Pelicula { get; set; }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("Filename=ClaroVideo.db");
+        }
     }
 }

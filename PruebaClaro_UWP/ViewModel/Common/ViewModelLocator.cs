@@ -15,6 +15,8 @@ namespace PruebaClaro_UWP.ViewModel.Common
         public DetailsViewModel Details => ServiceLocator.Current.GetInstance<DetailsViewModel>();
         public MoviesViewModel Movies => ServiceLocator.Current.GetInstance<MoviesViewModel>();
         public SettingsViewModel Settings => ServiceLocator.Current.GetInstance<SettingsViewModel>();
+        public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
+
 
         static ViewModelLocator()
         {
@@ -32,6 +34,7 @@ namespace PruebaClaro_UWP.ViewModel.Common
         {
             ioc.Register<DetailsViewModel>();
             ioc.Register<MoviesViewModel>();
+            ioc.Register<MainViewModel>();
             ioc.Register<SettingsViewModel>();
         }
 

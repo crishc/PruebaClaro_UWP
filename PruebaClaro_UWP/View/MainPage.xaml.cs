@@ -21,7 +21,7 @@ namespace PruebaClaro_UWP
             {
                     ContentFrame.Navigate(typeof(Settings));
             }
-            else if(args.InvokedItem.ToString().Equals("Movies") && !((NavigationViewItem)Shell.SelectedItem).Content.ToString().Equals("Movies"))
+            else if(args.InvokedItem.ToString().Equals("Ciencia ficción") && !((NavigationViewItem)Shell.SelectedItem).Content.ToString().Equals("Ciencia ficción"))
             {
                 ContentFrame.Navigate(typeof(Movies));
             }

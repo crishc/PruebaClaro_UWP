@@ -4,9 +4,54 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:c="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:media="using:Windows.UI.Xaml.Media"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="WhiteSmoke"/>
+        </Style>
+        <media:AcrylicBrush x:Key="CustomAcrylicBrush" 
+                            BackgroundSource="Backdrop"
+                            TintOpacity="0.3" 
+                            TintColor="#FF000000" 
+                            FallbackColor="#FF008000" />
+    </Page.Resources>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Image Stretch="UniformToFill"
+               Source="{Binding PeliculaSeleccionada.UrlImagen}"/>
+        <Rectangle Stretch="UniformToFill"
+                   Fill="{ThemeResource CustomAcrylicBrush}" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Image Stretch="None"
+                   Grid.RowSpan="2"
+                   Grid.Row="1"
+                   Source="{Binding PeliculaSeleccionada.UrlImagen}"
+                   Grid.Column="1"
+                   VerticalAlignment="Center"/>
+
+            <TextBlock Text="{Binding PeliculaSeleccionada.Titulo}"
+                       Grid.Column="1"
+                       Grid.Row="1"
+                       Grid.ColumnSpan="3"/>
+        </Grid>
 
     </Grid>
 </Page>

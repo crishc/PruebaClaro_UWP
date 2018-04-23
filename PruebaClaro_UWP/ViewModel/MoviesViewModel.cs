@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace PruebaClaro_UWP.ViewModel
@@ -19,6 +20,13 @@ namespace PruebaClaro_UWP.ViewModel
         #endregion
 
         #region Propiedades
+        public ObservableCollection<PeliculaGeneral> listaResultado;
+        public ObservableCollection<PeliculaGeneral> ListaResultado
+        {
+            get { return listaResultado; }
+            set { SetProperty(ref listaResultado, value); }
+        }
+
         private BitmapImage logoClaro;
         public BitmapImage LogoClaro
         {
@@ -33,16 +41,39 @@ namespace PruebaClaro_UWP.ViewModel
             set { SetProperty(ref peliculas, value); }
         }
 
+        private PeliculaGeneral peliculaSeleccionada;
+        public PeliculaGeneral PeliculaSeleccionada
+        {
+            get { return peliculaSeleccionada; }
+            set
+            {
+                if (value != peliculaSeleccionada && value != null)
+                {
+                    business.PeliculaSeleccionadaAsync(value.Id);
+                }
+                SetProperty(ref peliculaSeleccionada, value);
+            }
+        }
+
         private bool internetFalla;
         public bool InternetFalla
         {
             get { return internetFalla; }
             set { SetProperty(ref internetFalla, value); }
         }
+
+        private string query;
+        public string Query
+        {
+            get { return query; }
+            set { SetProperty(ref query, value); }
+        }
         #endregion
 
         #region Comandos
         public ICommand PageLoadedCommand { get; private set; }
+        public ICommand TextChangedCommand { get; private set; }
+        public ICommand QuerySubmittedCommand { get; private set; }
         #endregion
 
         #region Constructor
@@ -57,6 +88,24 @@ namespace PruebaClaro_UWP.ViewModel
         private void RegistrarComandos()
         {
             PageLoadedCommand = new RelayCommand(PageLoadedAsync);
+            QuerySubmittedCommand = new RelayCommand<AutoSuggestBoxQuerySubmittedEventArgs>(QuerySubmittedChanged);
+            TextChangedCommand = new RelayCommand<object>(TextChanged);
+        }
+        private async void TextChanged(object data)
+        {
+            ListaResultado = await business.BuscarPelicula(Query);
+        }
+        private void QuerySubmittedChanged(AutoSuggestBoxQuerySubmittedEventArgs data)
+        {
+            if (data.ChosenSuggestion != null)
+            {
+                Query = "";
+                PeliculaSeleccionada = (PeliculaGeneral)data.ChosenSuggestion;
+                //bus.PeliculaActualSet((PeliculaDetalleType)data.ChosenSuggestion);
+                //Navigate.Navigate(typeof(DetallePage));
+                //ListaResultado = null;
+            }
+            //ListaResultado = await bussinesLayer.BuscarPelicula(TextoBuscador);
         }
 
         private async void PageLoadedAsync()

@@ -6,6 +6,7 @@ using PruebaClaro_UWP.Model.Data.SQLite.Types;
 using PruebaClaro_UWP.Model.Services.Interfaces;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
 
@@ -25,6 +26,7 @@ namespace PruebaClaro_UWP.Model.Business
 
         #region Eventos
         public event EventHandler<bool> EventoCambioEstadoInternet;
+        public event EventHandler<Pelicula> EventoPeliculaSeleccionada;
         #endregion
 
         #region Constructor
@@ -56,10 +58,27 @@ namespace PruebaClaro_UWP.Model.Business
                 HayInternet = false;
             }
         }
-
         #endregion
 
         #region Metodos publicos
+        public async Task<ObservableCollection<PeliculaGeneral>> BuscarPelicula(string peliculaBuscar)
+        {
+            ObservableCollection<Pelicula> peliculasEncontradas = new ObservableCollection<Pelicula>();
+            if (HayInternet)
+            {
+                peliculasEncontradas = await dataService.ObtenerPeliculasAsync();
+            }
+            else
+            {
+                peliculasEncontradas = dataRepository.ObtenerPeliculas();
+            }
+
+            if (peliculasEncontradas != null)
+            {
+                peliculasEncontradas = new ObservableCollection<Pelicula>(peliculasEncontradas.Where(x => x.Titulo.ToUpper().Contains(peliculaBuscar.ToUpper())));
+            }
+            return Converters.ConvertirColeccionAPeliculasSimples(peliculasEncontradas);
+        }
         public async Task<ObservableCollection<PeliculaGeneral>> ObtenerPeliculasAsync()
         {
             ObservableCollection<Pelicula> datosRetorno = new ObservableCollection<Pelicula>();
@@ -77,6 +96,20 @@ namespace PruebaClaro_UWP.Model.Business
                 datosRetorno = dataRepository.ObtenerPeliculas();
             }
             return Converters.ConvertirColeccionAPeliculasSimples(datosRetorno);
+        }
+        public async Task PeliculaSeleccionadaAsync(int id)
+        {
+            Pelicula peliculaSeleccionada = new Pelicula();
+            if (HayInternet)
+            {
+                peliculaSeleccionada = await dataService.ObtenerPeliculasPorIdAsync(id);
+            }
+            else
+            {
+                peliculaSeleccionada = dataRepository.ObtenerPeliculaPorId(id);
+            }
+
+            EventoPeliculaSeleccionada?.Invoke(null, peliculaSeleccionada);
         }
         #endregion
     }

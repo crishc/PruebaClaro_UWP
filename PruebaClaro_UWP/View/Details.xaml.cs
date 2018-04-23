@@ -26,5 +26,6 @@ namespace PruebaClaro_UWP.View
         {
             this.InitializeComponent();
         }
+        
     }
 }

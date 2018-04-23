@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using Windows.ApplicationModel.Resources;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace PruebaClaro_UWP.Model.Services
 {
@@ -40,12 +41,13 @@ namespace PruebaClaro_UWP.Model.Services
             try
             {
                 var loader = new ResourceLoader();
-                string url = loader.GetString("ConsultaPelicula"+id);
+                string url = loader.GetString("ConsultaListaPeliculas");
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = await client.GetAsync(url);
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
-                Pelicula pelicula = JsonConvert.DeserializeObject<Pelicula>(responseBody);
+                ObservableCollection<Pelicula> listaPeliculas = JsonConvert.DeserializeObject<ObservableCollection<Pelicula>>(responseBody);
+                Pelicula pelicula = listaPeliculas.Where(p => p.Id == id).FirstOrDefault();
                 if (!response.IsSuccessStatusCode)
                 {
                     return new Pelicula();

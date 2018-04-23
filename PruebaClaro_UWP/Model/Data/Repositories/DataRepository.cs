@@ -51,7 +51,20 @@ namespace PruebaClaro_UWP.Model.Data.Repositories
         }
         public Pelicula ObtenerPeliculaPorId(int id)
         {
-            return null;
+            try
+            {
+                Pelicula pelicula = new Pelicula();
+                using (var db = new DataContext())
+                {
+                    pelicula = db.Pelicula.Where(p => p.Id == id).FirstOrDefault();
+                }
+                return pelicula;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return new Pelicula();
+            }
         }
     }
 }

@@ -20,6 +20,9 @@
     </i:Interaction.Behaviors>
 
     <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="WhiteSmoke"/>
+        </Style>
         <media:AcrylicBrush x:Key="CustomAcrylicBrush" 
                             BackgroundSource="Backdrop"
                             TintOpacity="0.4" 
@@ -50,10 +53,10 @@
                             VerticalAlignment="Center"
                             QueryIcon="Find"              
                             Text="{Binding Query, Mode=TwoWay}"
-                            ItemsSource="{Binding Elementos}"
+                            ItemsSource="{Binding ListaResultado}"
                             Margin="10">
                         <AutoSuggestBox.ItemTemplate >
-                            <DataTemplate x:DataType="types:PeliculaType">
+                            <DataTemplate x:DataType="types:PeliculaGeneral">
                                 <Grid x:Name="ElemntoPelicula"  Height="60"  Margin="5"  AutomationProperties.Name="{x:Bind Titulo}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="1*"/>
@@ -62,9 +65,8 @@
                                     <Image Height="60"
                                        Width="120"
                                        Source="{Binding UrlImagen}"  />
-                                    <StackPanel Grid.Column="1" Orientation="Vertical"  Height="50" VerticalAlignment="Center" Padding="8">
+                                    <StackPanel Grid.Column="1" Orientation="Vertical"  Height="30" VerticalAlignment="Center" Padding="8">
                                         <TextBlock Text="{x:Bind Titulo}"/>
-                                        <TextBlock  Text="{x:Bind Duracion}" Style="{ThemeResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
                                     </StackPanel>
                                 </Grid>
                             </DataTemplate>
@@ -97,28 +99,26 @@
                         IsItemClickEnabled="True"
                         IsSwipeEnabled="False"
                         CanDragItems="False"
-                        SelectedItem="{Binding ElementoMenu , Mode=TwoWay}"
-                        SelectionMode="Single"
-                          >
-                        <GridView.ItemTemplate >
+                        SelectedItem="{Binding PeliculaSeleccionada , Mode=TwoWay}"
+                        SelectionMode="Single">
+                    
+                    <GridView.ItemTemplate >
                             <DataTemplate x:Name="ImageOverlayDataTemplate1" x:DataType="types:PeliculaGeneral">
-                                <Grid x:Name="ElemntoPelicula" Height="180" Width="320" Margin="5"  AutomationProperties.Name="{x:Bind Titulo}">
-                                    <Image Name="RoundImageExControl"
-                                        CacheMode="BitmapCache" 
+                                <Grid x:Name="ElemntoPelicula" Height="160" Width="210" Margin="5"  AutomationProperties.Name="{x:Bind Titulo}" >
+                                <Image CacheMode="BitmapCache" 
                                         Stretch="UniformToFill"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Top"
-                                        Source="{x:Bind UrlImagen}"  />
-                                <StackPanel Orientation="Vertical" Height="50" VerticalAlignment="Bottom" Background="{ThemeResource CustomAcrylicBrush}" Padding="8">
+                                        Source="{x:Bind UrlImagen}"/>
+                                <StackPanel Orientation="Vertical" Height="30" VerticalAlignment="Bottom" Background="{ThemeResource CustomAcrylicBrush}" Padding="8">
                                         <TextBlock Text="{x:Bind Titulo}"/>
-                                        <TextBlock  Text="{x:Bind Duracion}" Style="{ThemeResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
                                     </StackPanel>
                                 </Grid>
                             </DataTemplate>
                         </GridView.ItemTemplate>
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <ItemsWrapGrid MaximumRowsOrColumns="4"  Orientation="Horizontal"/>
+                                <ItemsWrapGrid MaximumRowsOrColumns="7"  Orientation="Horizontal"/>
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                     </GridView>

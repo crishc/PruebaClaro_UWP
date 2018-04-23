@@ -35,5 +35,28 @@ namespace PruebaClaro_UWP.Model.Services
                 return new ObservableCollection<Pelicula>();
             }
         }
+        public async Task<Pelicula> ObtenerPeliculasPorIdAsync(int id)
+        {
+            try
+            {
+                var loader = new ResourceLoader();
+                string url = loader.GetString("ConsultaPelicula"+id);
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                Pelicula pelicula = JsonConvert.DeserializeObject<Pelicula>(responseBody);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new Pelicula();
+                }
+                return pelicula;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return new Pelicula();
+            }
+        }
     }
 }

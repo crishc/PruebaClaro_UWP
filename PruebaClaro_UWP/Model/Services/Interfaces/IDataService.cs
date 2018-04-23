@@ -7,5 +7,6 @@ namespace PruebaClaro_UWP.Model.Services.Interfaces
     public interface IDataService
     {
         Task<ObservableCollection<Pelicula>> ObtenerPeliculasAsync();
+        Task<Pelicula> ObtenerPeliculasPorIdAsync(int id);
     }
 }

@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
+using PruebaClaro_UWP.Model.Data.SQLite;
+using System;
 using System.Reflection;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace PruebaClaro_UWP
@@ -34,6 +26,10 @@ namespace PruebaClaro_UWP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            using (var db = new DataContext())
+            {
+                db.Database.Migrate();
+            }
         }
 
         /// <summary>

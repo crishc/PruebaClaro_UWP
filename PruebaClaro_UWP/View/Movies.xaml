@@ -26,7 +26,7 @@
                             TintColor="#FF000000" 
                             FallbackColor="#FFFFFF00" />
     </Page.Resources>
-    
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <ScrollViewer Padding="20,0,0,0"
                       IsTabStop="False"
@@ -34,59 +34,97 @@
                       VerticalScrollBarVisibility="Auto"
                       VerticalScrollMode="Auto"
                       VerticalContentAlignment="Top">
-            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20*"/>
+                </Grid.RowDefinitions>
+                <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                   VerticalAlignment="Top">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <AutoSuggestBox PlaceholderText="Pelicula"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <AutoSuggestBox PlaceholderText="Pelicula"
                             Grid.Column="2"
                             VerticalAlignment="Center"
                             QueryIcon="Find"              
                             Text="{Binding Query, Mode=TwoWay}"
                             ItemsSource="{Binding Elementos}"
                             Margin="10">
-                    <AutoSuggestBox.ItemTemplate >
-                        <DataTemplate x:DataType="types:PeliculaType">
-                            <Grid x:Name="ElemntoPelicula"  Height="60"  Margin="5"  AutomationProperties.Name="{x:Bind Titulo}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Height="60"
+                        <AutoSuggestBox.ItemTemplate >
+                            <DataTemplate x:DataType="types:PeliculaType">
+                                <Grid x:Name="ElemntoPelicula"  Height="60"  Margin="5"  AutomationProperties.Name="{x:Bind Titulo}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Height="60"
                                        Width="120"
                                        Source="{Binding UrlImagen}"  />
-                                <StackPanel Grid.Column="1" Orientation="Vertical"  Height="50" VerticalAlignment="Center" Padding="8">
-                                    <TextBlock Text="{x:Bind Titulo}"/>
-                                    <TextBlock  Text="{x:Bind Duracion}" Style="{ThemeResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </AutoSuggestBox.ItemTemplate>
-                    <i:Interaction.Behaviors>
-                        <c:EventTriggerBehavior EventName="TextChanged">
-                            <c:InvokeCommandAction Command="{Binding TextChangedCommand}" />
-                        </c:EventTriggerBehavior>
-                        <c:EventTriggerBehavior EventName="QuerySubmitted">
-                            <c:InvokeCommandAction Command="{Binding QuerySubmittedCommand}" />
-                        </c:EventTriggerBehavior>
-                    </i:Interaction.Behaviors>
-                </AutoSuggestBox>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center"  HorizontalAlignment="Left">
-                    <Image Margin="10 0 0 0" 
+                                    <StackPanel Grid.Column="1" Orientation="Vertical"  Height="50" VerticalAlignment="Center" Padding="8">
+                                        <TextBlock Text="{x:Bind Titulo}"/>
+                                        <TextBlock  Text="{x:Bind Duracion}" Style="{ThemeResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </AutoSuggestBox.ItemTemplate>
+                        <i:Interaction.Behaviors>
+                            <c:EventTriggerBehavior EventName="TextChanged">
+                                <c:InvokeCommandAction Command="{Binding TextChangedCommand}" />
+                            </c:EventTriggerBehavior>
+                            <c:EventTriggerBehavior EventName="QuerySubmitted">
+                                <c:InvokeCommandAction Command="{Binding QuerySubmittedCommand}" />
+                            </c:EventTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </AutoSuggestBox>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center"  HorizontalAlignment="Left">
+                        <Image Margin="10 0 0 0" 
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Left"
                            Height="100" 
                            Width="210" 
                            Stretch="Uniform"  
                            Source="{Binding LogoClaro}"/>
-                    <TextBlock Text="{Binding TextoEstadoInternet}" Foreground="white" VerticalAlignment="Bottom" Margin="10" HorizontalAlignment="Left"></TextBlock>
-                </StackPanel>
-
+                        <TextBlock Text="{Binding TextoEstadoInternet}" Foreground="white" VerticalAlignment="Bottom" Margin="10" HorizontalAlignment="Left"></TextBlock>
+                    </StackPanel>
+                </Grid>
+                <GridView Grid.Row="1"
+                        x:Name="listView" 
+                        ItemsSource="{Binding Peliculas}"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Center"
+                        IsItemClickEnabled="True"
+                        IsSwipeEnabled="False"
+                        CanDragItems="False"
+                        SelectedItem="{Binding ElementoMenu , Mode=TwoWay}"
+                        SelectionMode="Single"
+                          >
+                        <GridView.ItemTemplate >
+                            <DataTemplate x:Name="ImageOverlayDataTemplate1" x:DataType="types:PeliculaGeneral">
+                                <Grid x:Name="ElemntoPelicula" Height="180" Width="320" Margin="5"  AutomationProperties.Name="{x:Bind Titulo}">
+                                    <Image Name="RoundImageExControl"
+                                        CacheMode="BitmapCache" 
+                                        Stretch="UniformToFill"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        Source="{x:Bind UrlImagen}"  />
+                                <StackPanel Orientation="Vertical" Height="50" VerticalAlignment="Bottom" Background="{ThemeResource CustomAcrylicBrush}" Padding="8">
+                                        <TextBlock Text="{x:Bind Titulo}"/>
+                                        <TextBlock  Text="{x:Bind Duracion}" Style="{ThemeResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsWrapGrid MaximumRowsOrColumns="4"  Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                    </GridView>
             </Grid>
             <!--<Rectangle Fill="{ThemeResource CustomAcrylicBrush}" />-->
         </ScrollViewer>
     </Grid>
-    
+
 </Page>

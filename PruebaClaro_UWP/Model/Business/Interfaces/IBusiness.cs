@@ -1,4 +1,7 @@
-﻿using System;
+﻿using PruebaClaro_UWP.Model.Data.SQLite.Types;
+using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace PruebaClaro_UWP.Model.Business.Interfaces
 {
@@ -8,5 +11,7 @@ namespace PruebaClaro_UWP.Model.Business.Interfaces
 
         string TemaActual { get; set; }
         bool HayInternet { get; }
+
+        Task<ObservableCollection<PeliculaGeneral>> ObtenerPeliculasAsync();
     }
 }

@@ -2,7 +2,6 @@
 using PruebaClaro_UWP.Model.Data.SQLite;
 using PruebaClaro_UWP.Model.Data.SQLite.Entities;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;

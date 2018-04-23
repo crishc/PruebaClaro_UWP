@@ -10,6 +10,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <NavigationView x:Name="Shell"
                         ItemInvoked="Shell_ItemInvoked"
+                        Header="Ciencia ficción"
                         AlwaysShowHeader="False"
                         Loaded="Shell_Loaded"
                         ExpandedModeThresholdWidth="2000"

@@ -101,11 +101,10 @@
                         CanDragItems="False"
                         SelectedItem="{Binding PeliculaSeleccionada , Mode=TwoWay}"
                         SelectionMode="Single">
-                    
                     <GridView.ItemTemplate >
                             <DataTemplate x:Name="ImageOverlayDataTemplate1" x:DataType="types:PeliculaGeneral">
                                 <Grid x:Name="ElemntoPelicula" Height="160" Width="210" Margin="5"  AutomationProperties.Name="{x:Bind Titulo}" >
-                                <Image CacheMode="BitmapCache" 
+                                <Image  x:Name="ImagenPeliculaAnim" CacheMode="BitmapCache" 
                                         Stretch="UniformToFill"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Top"

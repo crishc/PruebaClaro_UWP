@@ -80,6 +80,7 @@
                         <Hyperlink NavigateUri="mailto:cris.hc@outlook.com">mailto:cris.hc@outlook.com</Hyperlink> .
                     </Paragraph>
                 </RichTextBlock>
+                
             </StackPanel>
         </ScrollViewer>
     </Grid>

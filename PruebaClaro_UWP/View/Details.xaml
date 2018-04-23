@@ -40,7 +40,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Image Stretch="None"
+            <Image x:Name="Imagen" Stretch="None"
                    Grid.RowSpan="2"
                    Grid.Row="1"
                    Source="{Binding PeliculaSeleccionada.UrlImagen}"
@@ -48,9 +48,66 @@
                    VerticalAlignment="Center"/>
 
             <TextBlock Text="{Binding PeliculaSeleccionada.Titulo}"
-                       Grid.Column="1"
+                       Grid.Column="2"
+                       Grid.ColumnSpan="2"
+                       HorizontalTextAlignment="Right"
                        Grid.Row="1"
-                       Grid.ColumnSpan="3"/>
+                       FontSize="50"/>
+            <ScrollViewer Grid.Row="2"
+                        Grid.Column="3"
+                      Padding="20,0,0,0"
+                      IsTabStop="False"
+                      UseSystemFocusVisuals="False"
+                      VerticalScrollBarVisibility="Auto"
+                      VerticalScrollMode="Auto">
+                <StackPanel >
+                    <TextBlock
+                    Style="{StaticResource TitleTextBlockStyle}"
+                    Margin="0,40,0,0"
+                    FontWeight="Normal"
+                    Text="Duracion" />
+                    <TextBlock TextWrapping="Wrap"
+                           Style="{StaticResource BaseTextBlockStyle}"
+                          Text="{Binding PeliculaSeleccionada.Duracion}"
+                          Margin="0 10  0  0"/>
+                    <TextBlock
+                    Style="{StaticResource TitleTextBlockStyle}"
+                    Margin="0,40,0,0"
+                    FontWeight="Normal"
+                    Text="Descripción" />
+                    <TextBlock TextWrapping="Wrap"
+                           Style="{StaticResource BaseTextBlockStyle}"
+                          Text="{Binding PeliculaSeleccionada.Descripcion}"
+                          Margin="0 10  0  0"/>
+                    <TextBlock
+                    Style="{StaticResource TitleTextBlockStyle}"
+                    Margin="0,40,0,0"
+                    FontWeight="Normal"
+                    Text="Actores" />
+                    <TextBlock TextWrapping="Wrap"
+                           Style="{StaticResource BaseTextBlockStyle}"
+                          Text="{Binding PeliculaSeleccionada.Actor}"
+                          Margin="0 10  0  0"/>
+                    <TextBlock
+                    Style="{StaticResource TitleTextBlockStyle}"
+                    Margin="0,40,0,0"
+                    FontWeight="Normal"
+                    Text="Director" />
+                    <TextBlock TextWrapping="Wrap"
+                           Style="{StaticResource BaseTextBlockStyle}"
+                          Text="{Binding PeliculaSeleccionada.Director}"
+                          Margin="0 10  0  0"/>
+                    <TextBlock
+                    Style="{StaticResource TitleTextBlockStyle}"
+                    Margin="0,40,0,0"
+                    FontWeight="Normal"
+                    Text="Escritor" />
+                    <TextBlock TextWrapping="Wrap"
+                           Style="{StaticResource BaseTextBlockStyle}"
+                          Text="{Binding PeliculaSeleccionada.Escritor}"
+                          Margin="0 10  0  0"/>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
 
     </Grid>
